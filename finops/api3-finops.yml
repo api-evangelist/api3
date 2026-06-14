@@ -1,0 +1,92 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: API3
+providerId: api3
+created: '2026-06-13'
+modified: '2026-06-13'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - Blockchain
+  - Oracle
+  - Data Feeds
+  - dAPI
+  - OEV
+description: >-
+  FOCUS-aligned FinOps for API3: costs are incurred as gas-cost-denominated dAPI subscriptions
+  purchased on the API3 Market. Mainnet plans are 3-month commitments priced at estimated
+  operational gas costs (minimum $0.05/day per feed). Revenue flows back to dApps via OEV
+  Rewards — 80% of auction proceeds paid monthly in native chain gas token — making the net
+  oracle cost negative for sufficiently active DeFi protocols. Open-source Airnode deployment
+  is free; costs are infrastructure (AWS Lambda or equivalent serverless) borne by the API
+  provider operating the node.
+sources:
+  - https://docs.api3.org/dapps/integration/
+  - https://docs.api3.org/dapps/oev-rewards/
+  - https://market.api3.org/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: API3 Foundation
+serviceCategory: Blockchain & Data Infrastructure
+billingModel:
+  pricingCategory: Operational Gas Cost Pass-Through
+  billingFrequency: Upfront Subscription (3-month mainnet / 7-day testnet)
+  billingCurrency: USD (converted to gas at subscription time)
+  chargeCategories:
+    - Usage
+    - Adjustment
+    - Refund
+focusColumns:
+  ServiceName: API3 dAPI Data Feeds
+  ServiceCategory: Blockchain & Data Infrastructure
+  ProviderName: API3
+  PublisherName: API3 Foundation
+  InvoiceIssuerName: API3 Foundation
+costDrivers:
+  - name: dAPI subscription (mainnet)
+    description: >-
+      3-month prepaid subscription covering estimated gas costs to maintain the chosen
+      deviation threshold and heartbeat for a single feed on a single EVM chain.
+      Minimum $0.05/day; actual cost scales with network gas prices and update frequency.
+    unit: subscription per feed per chain
+    billingPeriod: 3-month upfront
+    pricingModel: estimated-gas-cost
+  - name: dAPI subscription (testnet)
+    description: 7-day free trial subscription on supported testnets.
+    unit: subscription per feed per testnet
+    billingPeriod: 7-day
+    pricingModel: free
+  - name: OEV Rewards (revenue)
+    description: >-
+      Inbound revenue to the dApp representing 80% of OEV auction proceeds captured
+      around the dApp's oracle updates. Paid monthly in native chain gas token.
+      Recognized as negative cost / revenue offset against oracle subscription spend.
+    unit: percentage of OEV auction proceeds
+    billingPeriod: monthly payout
+    pricingModel: revenue-share-80pct
+optimizationOpportunities:
+  - name: Choose a wider deviation threshold
+    description: >-
+      Selecting 2.5% or 5% deviation thresholds reduces the number of on-chain updates
+      per period and lowers operational gas costs substantially versus 0.25% or 0.5%.
+      Assess protocol sensitivity to stale prices before widening thresholds.
+  - name: Enable OEV Rewards
+    description: >-
+      Deploying a custom OEV proxy instead of the generic shared proxy enables the dApp
+      to receive 80% of MEV captured around its feeds, potentially recovering all or
+      more of subscription costs for high-TVL protocols.
+  - name: Consolidate chains
+    description: >-
+      Each chain deployment requires a separate subscription. Consolidating liquidity to
+      fewer, higher-volume chains reduces total subscription spend while retaining coverage
+      where TVL is highest.
+  - name: Monitor gas credit rollover
+    description: >-
+      If actual gas costs fall below estimates, the difference rolls over as credit toward
+      the next plan on the same chain+feed pair. Track rollover balances to reduce renewal cost.

@@ -1,0 +1,165 @@
+aid: api3
+url: https://raw.githubusercontent.com/api-evangelist/api3/refs/heads/main/apis.yml
+name: API3
+kind: company
+description: >-
+  API3 is a first-party blockchain oracle network that connects real-world APIs directly to smart
+  contracts without intermediary nodes. Its core technology is Airnode, a serverless oracle node
+  that API providers operate themselves, cryptographically signing data before serving it on-chain.
+  The API3 Market enables dApp developers to subscribe to managed decentralized APIs (dAPIs) —
+  aggregated, multi-source data feeds covering 150+ price pairs across 40+ EVM chains — without
+  speaking to a sales rep or signing a contract. API3's OEV (Oracle Extractable Value) mechanism
+  captures MEV that traditionally leaks to bots around oracle updates and redistributes 80% of that
+  revenue to the dApps reading the feeds, creating a net-positive oracle revenue model. The DAO
+  governs the network via staked API3 tokens.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Blockchain
+  - Oracle
+  - Decentralized
+  - Data Feeds
+  - Price Feeds
+  - Web3
+  - DeFi
+  - Smart Contracts
+  - OEV
+  - dAPI
+type: Index
+access: 3rd-Party
+position: Consumer
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+apis:
+  - aid: api3:dapi-data-feeds
+    name: API3 dAPI Data Feeds
+    description: >-
+      Managed decentralized API (dAPI) data feeds sourced directly from first-party oracle nodes
+      operated by the data providers themselves. Each feed aggregates signed data from multiple
+      Airnode operators and is updated on-chain based on deviation thresholds (0.25%, 0.5%, 1%,
+      2.5%, or 5%) and a 24-hour heartbeat. Smart contracts read feeds via the
+      IProxy/AggregatorV2V3Interface-compatible Api3ReaderProxyV1 contract. Over 150 asset
+      pairs — crypto, forex, equities, and commodities — are available across 40+ EVM networks.
+      Subscriptions are purchased through the API3 Market; testnet plans are 7-day trials and
+      mainnet plans are 3-month subscriptions.
+    humanURL: https://market.api3.org/
+    baseURL: https://market.api3.org
+    tags:
+      - Data Feeds
+      - Price Feeds
+      - dAPI
+      - Oracle
+      - DeFi
+      - EVM
+    properties:
+      - type: Documentation
+        url: https://docs.api3.org/dapps/
+      - type: Integration
+        url: https://docs.api3.org/dapps/integration/
+      - type: GettingStarted
+        url: https://docs.api3.org/dapps/
+    x-features:
+      - 150+ price pairs (crypto, forex, equities, commodities)
+      - Configurable deviation thresholds (0.25% – 5%)
+      - 24-hour heartbeat interval
+      - AggregatorV2V3Interface-compatible proxy contracts
+      - 40+ EVM chains including Ethereum, Arbitrum, Base, BNB Chain, Polygon, Avalanche
+      - No minimum commitment; pay-as-you-go subscription
+    x-use-cases:
+      - DeFi lending protocols needing reliable collateral price feeds
+      - Derivatives and perpetuals platforms requiring low-latency mark prices
+      - Stablecoin systems referencing external price anchors
+      - Prediction markets and options protocols reading settlement prices
+  - aid: api3:oev-rewards
+    name: API3 OEV Rewards
+    description: >-
+      Oracle Extractable Value (OEV) Rewards is API3's revenue-sharing mechanism for dApps that
+      integrate OEV-enabled Api3ReaderProxyV1 proxy contracts. When liquidation or arbitrage
+      opportunities arise around oracle updates, API3 runs an auction on the OEV Network and
+      captures the resulting MEV. 80% of auction proceeds are paid monthly in the native gas token
+      of the dApp's deployed chain to the wallet the dApp designates. Integration requires deploying
+      a custom proxy (free via the API3 Market) rather than the generic shared proxy, and registering
+      a recipient wallet address with an API3 representative.
+    humanURL: https://docs.api3.org/dapps/oev-rewards/
+    baseURL: https://market.api3.org
+    tags:
+      - OEV
+      - MEV
+      - Revenue Sharing
+      - DeFi
+      - Oracle
+    properties:
+      - type: Documentation
+        url: https://docs.api3.org/dapps/oev-rewards/
+      - type: GettingStarted
+        url: https://docs.api3.org/dapps/oev-rewards/
+    x-features:
+      - 80% of OEV auction proceeds returned to dApp
+      - Monthly payouts in native chain gas token
+      - No code changes to smart contracts required
+      - Custom proxy deployment via API3 Market
+      - Supported on all 40+ API3 chain deployments
+    x-use-cases:
+      - Lending protocols (Compound, Morpho, Moonwell) offsetting oracle costs
+      - Any DeFi application using API3 dAPI feeds to generate passive revenue
+      - Treasury diversification via oracle MEV redistribution
+  - aid: api3:airnode-http-gateway
+    name: API3 Airnode HTTP Gateway
+    description: >-
+      The Airnode HTTP gateway exposes a REST endpoint that allows authorized callers to query an
+      Airnode operator's API data off-chain without sending a blockchain transaction. API providers
+      configure the gateway in their Airnode's nodeSettings, protecting it with an API key.
+      Responses contain the same cryptographically signed data that is eventually posted on-chain,
+      enabling off-chain verification, testing, and direct signed-data consumption by third-party
+      data push relayers. The OEV Gateway variant is used by auction searchers to retrieve
+      Airnode-signed price updates that can only be used by the winning OEV auction bidder.
+    humanURL: https://old-docs.api3.org/airnode/pre-alpha/
+    baseURL: https://airnode.api3.org
+    tags:
+      - Airnode
+      - HTTP Gateway
+      - Signed Data
+      - OEV
+      - REST
+    properties:
+      - type: Documentation
+        url: https://old-docs.api3.org/airnode/pre-alpha/
+    x-features:
+      - API-key-protected REST endpoint per Airnode deployment
+      - Returns cryptographically signed data from the source API provider
+      - Enables off-chain data consumption without on-chain transactions
+      - OEV Gateway variant restricts signed data to winning auction bidder
+    x-use-cases:
+      - Off-chain testing of Airnode data before on-chain integration
+      - Third-party push relayers submitting signed data to chain
+      - OEV searchers fetching price updates to submit winning auction bids
+common:
+  - type: Website
+    url: https://api3.org/
+  - type: Documentation
+    url: https://docs.api3.org/
+  - type: Blog
+    url: https://blog.api3.org/
+  - type: GitHubOrganization
+    url: https://github.com/api3dao
+  - type: Discord
+    url: https://discord.gg/qnRrcfnm5W
+  - type: Twitter
+    url: https://twitter.com/API3DAO
+  - type: Telegram
+    url: https://t.me/API3DAO
+  - type: Forum
+    url: https://forum.api3.org/
+  - type: Staking
+    url: https://stake.api3.org/
+  - type: Market
+    url: https://market.api3.org/
+  - type: Plans
+    url: plans/api3-plans.yml
+  - type: RateLimits
+    url: rate-limits/api3-rate-limits.yml
+  - type: FinOps
+    url: finops/api3-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

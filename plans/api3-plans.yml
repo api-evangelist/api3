@@ -1,0 +1,102 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: API3
+providerId: api3
+created: '2026-06-13'
+modified: '2026-06-13'
+reconciled: true
+tags:
+  - Blockchain
+  - Oracle
+  - Data Feeds
+  - dAPI
+  - OEV
+  - Plans
+description: >-
+  API3 dAPI subscriptions are purchased through the API3 Market on a self-serve, pay-as-you-go
+  basis with no contracts or sales conversations required. Pricing reflects estimated operational
+  gas costs for maintaining update thresholds and heartbeat — or $0.05/day, whichever is higher.
+  Testnet plans run for 7 days; mainnet plans run for 3 months. Unused prepaid gas rolls over as
+  a credit on the same chain+feed pair. OEV Rewards integration is free — revenue flows from the
+  OEV auction pool rather than from the dApp. Airnode deployment and the HTTP gateway are
+  open-source and self-hosted; there are no API3 per-call fees for Airnode gateway usage.
+sources:
+  - https://docs.api3.org/dapps/integration/
+  - https://market.api3.org/
+  - https://docs.api3.org/dapps/oev-rewards/
+plans:
+  - id: api3-testnet-trial
+    name: Testnet Trial Plan
+    type: trial
+    description: >-
+      7-day testnet subscription for a single dAPI feed on a supported testnet network.
+      Allows developers to integrate and test Api3ReaderProxyV1 contracts before committing
+      to a mainnet plan. No payment required on testnets.
+    entries:
+      - label: Testnet dAPI subscription
+        name: testnet_dapi
+        type: flat
+        metric: subscription
+        limit: 1
+        timeFrame: 7-day
+        geo: global
+        unit: 1
+        price: $0.00
+        userMultiplied: false
+    elements:
+      - name: Single dAPI feed on testnet
+      - name: Configurable deviation threshold (0.25–5%)
+      - name: 24-hour heartbeat
+      - name: Api3ReaderProxyV1 contract address
+  - id: api3-mainnet-standard
+    name: Mainnet Standard Plan
+    type: usage-based
+    description: >-
+      3-month mainnet subscription for a single dAPI feed on a supported EVM network.
+      Priced at estimated operational gas costs to maintain the selected deviation threshold
+      and heartbeat interval, with a minimum of $0.05/day. Any over-estimated gas accrues
+      as credit toward the next renewal on the same chain and feed pair.
+    entries:
+      - label: dAPI operational gas (per day)
+        name: dapi_gas_daily
+        type: metered
+        metric: gas-cost
+        limit: -1
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: estimated operational cost ($0.05/day minimum)
+        userMultiplied: false
+    elements:
+      - name: Single dAPI feed on mainnet
+      - name: Configurable deviation threshold (0.25%, 0.5%, 1%, 2.5%, or 5%)
+      - name: 24-hour heartbeat
+      - name: Api3ReaderProxyV1 or custom OEV proxy contract
+      - name: 40+ supported EVM chains
+      - name: Gas-cost rollover credit on renewal
+  - id: api3-oev-rewards
+    name: OEV Rewards (Revenue Share)
+    type: revenue-share
+    description: >-
+      Free integration tier that enables dApps to receive 80% of OEV auction proceeds
+      generated around their oracle updates. Requires deploying a custom OEV-enabled
+      Api3ReaderProxyV1 proxy via the API3 Market and registering a recipient wallet with
+      an API3 representative. Payouts are in the native gas token of the dApp chain,
+      distributed monthly. No upfront cost; revenue comes from third-party MEV capture.
+    entries:
+      - label: OEV revenue share to dApp
+        name: oev_revenue_share
+        type: revenue-share
+        metric: oev-auction-proceeds
+        limit: -1
+        timeFrame: monthly
+        geo: global
+        unit: 1
+        price: 80% of OEV auction proceeds
+        userMultiplied: false
+    elements:
+      - name: Custom OEV-enabled proxy contract
+      - name: Monthly payout in native chain gas token
+      - name: No smart contract code changes required
+      - name: Supported on all 40+ API3 chain deployments

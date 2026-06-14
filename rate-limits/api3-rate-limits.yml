@@ -1,0 +1,57 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: API3
+providerId: api3
+created: '2026-06-13'
+modified: '2026-06-13'
+reconciled: false
+tags:
+  - Rate Limiting
+  - Blockchain
+  - Oracle
+  - Data Feeds
+  - dAPI
+description: >-
+  API3's primary integration surface is on-chain smart contract reads of Api3ReaderProxyV1
+  proxy contracts, which are not subject to HTTP rate limits — they are standard EVM CALL
+  operations gated only by gas. The API3 Market web application and its backing REST API are
+  not published as a public developer API with documented rate limits; throttling exists but
+  specifics are not disclosed. The Airnode HTTP gateway is self-hosted by each data provider
+  and rate limits are set by the individual operator at deployment time. The reconciled flag
+  is set to false until API3 publishes explicit numeric limits for the Market API or a
+  shared Signed API endpoint.
+sources:
+  - https://docs.api3.org/dapps/
+  - https://docs.api3.org/dapps/integration/
+  - https://market.api3.org/
+notes: >-
+  Rate limiting for on-chain data feed reads is determined by the underlying EVM network's
+  block gas limits, not by API3. Off-chain reads via Airnode HTTP gateways are governed by
+  individual operator configurations. No centralized API3-hosted endpoint rate limit
+  documentation has been published as of June 2026.
+limits:
+  - name: On-chain dAPI read (IProxy.read)
+    scope: contract
+    metric: calls_per_block
+    limit: -1
+    timeFrame: block
+    notes: >-
+      Smart contract reads are EVM CALL operations; there is no API3-imposed limit.
+      Rate is bounded only by network gas limits and the calling contract's budget.
+  - name: API3 Market web API
+    scope: IP
+    metric: requests_per_minute
+    limit: -1
+    timeFrame: minute
+    notes: >-
+      The API3 Market backing API is not documented as a public developer API.
+      Throttling is applied but specific numeric limits are not publicly disclosed.
+  - name: Airnode HTTP Gateway
+    scope: IP
+    metric: requests_per_second
+    limit: -1
+    timeFrame: second
+    notes: >-
+      Self-hosted per operator. Rate limits are configured by the Airnode operator
+      in their nodeSettings and vary by deployment. No API3-level limit applies.
