@@ -154,6 +154,10 @@ common:
     url: https://stake.api3.org/
   - type: Market
     url: https://market.api3.org/
+  - type: OpenAPI
+    url: openapi/api3-signed-api-openapi.yml
+  - type: JSONLd
+    url: json-ld/api3-context.jsonld
   - type: Plans
     url: plans/api3-plans.yml
   - type: RateLimits

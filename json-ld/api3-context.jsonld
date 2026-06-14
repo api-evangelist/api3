@@ -1,0 +1,208 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "api3": "https://api3.org/vocab#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "provider": {
+      "@id": "schema:provider",
+      "@type": "@id"
+    },
+    "API3": {
+      "@id": "api3:Organization",
+      "@context": {
+        "name": "schema:name",
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "description": "schema:description",
+        "docs": {
+          "@id": "schema:documentation",
+          "@type": "@id"
+        },
+        "github": {
+          "@id": "schema:codeRepository",
+          "@type": "@id"
+        },
+        "blog": {
+          "@id": "schema:Blog",
+          "@type": "@id"
+        },
+        "forum": {
+          "@id": "schema:DiscussionForumPosting",
+          "@type": "@id"
+        },
+        "discord": {
+          "@id": "api3:discordServer",
+          "@type": "@id"
+        },
+        "telegram": {
+          "@id": "api3:telegramGroup",
+          "@type": "@id"
+        },
+        "twitter": {
+          "@id": "schema:sameAs",
+          "@type": "@id"
+        }
+      }
+    },
+    "dAPI": {
+      "@id": "api3:dAPI",
+      "@context": {
+        "feedName": "api3:feedName",
+        "baseAsset": "api3:baseAsset",
+        "quoteAsset": "api3:quoteAsset",
+        "deviationThreshold": {
+          "@id": "api3:deviationThreshold",
+          "@type": "xsd:decimal"
+        },
+        "heartbeatInterval": {
+          "@id": "api3:heartbeatInterval",
+          "@type": "xsd:integer"
+        },
+        "supportedChains": {
+          "@id": "api3:supportedChains",
+          "@container": "@list"
+        },
+        "proxyContract": {
+          "@id": "api3:proxyContract",
+          "@type": "@id"
+        }
+      }
+    },
+    "Airnode": {
+      "@id": "api3:Airnode",
+      "@context": {
+        "airnodeAddress": "api3:airnodeAddress",
+        "xpub": "api3:xpub",
+        "httpGatewayUrl": {
+          "@id": "api3:httpGatewayUrl",
+          "@type": "@id"
+        },
+        "oevGatewayUrl": {
+          "@id": "api3:oevGatewayUrl",
+          "@type": "@id"
+        },
+        "cloudProvider": "api3:cloudProvider",
+        "nodeVersion": "api3:nodeVersion"
+      }
+    },
+    "SignedData": {
+      "@id": "api3:SignedData",
+      "@context": {
+        "airnode": "api3:airnodeAddress",
+        "templateId": "api3:templateId",
+        "beaconId": "api3:beaconId",
+        "timestamp": {
+          "@id": "schema:dateCreated",
+          "@type": "xsd:integer"
+        },
+        "encodedValue": "api3:encodedValue",
+        "signature": "api3:signature"
+      }
+    },
+    "OEVReward": {
+      "@id": "api3:OEVReward",
+      "@context": {
+        "dapp": "api3:dappName",
+        "chain": "api3:chainName",
+        "recipientWallet": "api3:recipientWallet",
+        "revenueSharePercent": {
+          "@id": "api3:revenueSharePercent",
+          "@type": "xsd:integer"
+        },
+        "paymentFrequency": "api3:paymentFrequency",
+        "paymentToken": "api3:paymentToken"
+      }
+    },
+    "WebAPI": "schema:WebAPI",
+    "EntryPoint": "schema:EntryPoint",
+    "apiEndpoint": {
+      "@id": "schema:potentialAction",
+      "@type": "schema:EntryPoint"
+    },
+    "httpMethod": "schema:httpMethod",
+    "urlTemplate": "schema:urlTemplate"
+  },
+  "@graph": [
+    {
+      "@id": "https://api3.org/",
+      "@type": ["schema:Organization", "api3:Organization"],
+      "name": "API3",
+      "description": "First-party blockchain oracle network connecting real-world APIs directly to smart contracts via Airnode, dAPIs, and OEV Revenue Sharing.",
+      "url": "https://api3.org/",
+      "docs": "https://docs.api3.org/",
+      "github": "https://github.com/api3dao",
+      "blog": "https://blog.api3.org/",
+      "forum": "https://forum.api3.org/",
+      "discord": "https://discord.gg/qnRrcfnm5W",
+      "telegram": "https://t.me/API3DAO",
+      "twitter": "https://twitter.com/API3DAO"
+    },
+    {
+      "@id": "https://api3.org/services/signed-api",
+      "@type": "schema:WebAPI",
+      "name": "API3 Signed API",
+      "description": "REST service for storing and serving cryptographically signed oracle data produced by Airnode feed nodes. Self-hosted by API3 and Airnode operators.",
+      "url": "https://github.com/api3dao/signed-api",
+      "provider": "https://api3.org/",
+      "schema:documentation": "https://docs.api3.org/reference/airnode/latest/",
+      "schema:version": "2.0.0",
+      "apiEndpoint": [
+        {
+          "@type": "schema:EntryPoint",
+          "name": "getStatus",
+          "urlTemplate": "https://signed-api.api3.org/",
+          "httpMethod": "GET",
+          "description": "Returns deployment status, version, config hash, and certified Airnode list"
+        },
+        {
+          "@type": "schema:EntryPoint",
+          "name": "listAirnodeAddresses",
+          "urlTemplate": "https://signed-api.api3.org/airnodes",
+          "httpMethod": "GET",
+          "description": "Returns all Airnode addresses stored in this Signed API instance"
+        },
+        {
+          "@type": "schema:EntryPoint",
+          "name": "getSignedData",
+          "urlTemplate": "https://signed-api.api3.org/{airnodeAddress}",
+          "httpMethod": "GET",
+          "description": "Returns latest signed beacon data for all beacons of a given Airnode"
+        },
+        {
+          "@type": "schema:EntryPoint",
+          "name": "batchInsertSignedData",
+          "urlTemplate": "https://signed-api.api3.org/{airnodeAddress}",
+          "httpMethod": "POST",
+          "description": "Allows Airnode feed nodes to push signed beacon data to this instance"
+        }
+      ]
+    },
+    {
+      "@id": "https://api3.org/services/dapi-data-feeds",
+      "@type": "schema:WebAPI",
+      "name": "API3 dAPI Data Feeds",
+      "description": "Managed decentralized API data feeds served via AggregatorV2V3Interface-compatible proxy contracts across 40+ EVM chains.",
+      "url": "https://market.api3.org/",
+      "provider": "https://api3.org/",
+      "schema:documentation": "https://docs.api3.org/dapps/"
+    },
+    {
+      "@id": "https://api3.org/services/oev-rewards",
+      "@type": "schema:WebAPI",
+      "name": "API3 OEV Rewards",
+      "description": "Revenue-sharing mechanism redistributing 80% of OEV auction proceeds to dApps using API3 oracle feeds.",
+      "url": "https://docs.api3.org/dapps/oev-rewards/",
+      "provider": "https://api3.org/",
+      "schema:documentation": "https://docs.api3.org/dapps/oev-rewards/"
+    }
+  ]
+}
