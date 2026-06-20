@@ -12,7 +12,7 @@ description: >-
   captures MEV that traditionally leaks to bots around oracle updates and redistributes 80% of that
   revenue to the dApps reading the feeds, creating a net-positive oracle revenue model. The DAO
   governs the network via staked API3 tokens.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Blockchain
   - Oracle
