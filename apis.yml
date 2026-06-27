@@ -54,7 +54,7 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.api3.org/dapps/
-      - type: Integration
+      - type: Integrations
         url: https://docs.api3.org/dapps/integration/
       - type: GettingStarted
         url: https://docs.api3.org/dapps/
@@ -148,7 +148,7 @@ common:
     url: https://twitter.com/API3DAO
   - type: Telegram
     url: https://t.me/API3DAO
-  - type: Forum
+  - type: Forums
     url: https://forum.api3.org/
   - type: Staking
     url: https://stake.api3.org/
@@ -156,7 +156,7 @@ common:
     url: https://market.api3.org/
   - type: OpenAPI
     url: openapi/api3-signed-api-openapi.yml
-  - type: JSONLd
+  - type: JSONLD
     url: json-ld/api3-context.jsonld
   - type: Plans
     url: plans/api3-plans.yml
