@@ -134,6 +134,10 @@ apis:
       - Third-party push relayers submitting signed data to chain
       - OEV searchers fetching price updates to submit winning auction bids
 common:
+  - type: DomainSecurity
+    url: security/api3-domain-security.yml
+  - type: Authentication
+    url: authentication/api3-authentication.yml
   - type: Website
     url: https://api3.org/
   - type: Documentation

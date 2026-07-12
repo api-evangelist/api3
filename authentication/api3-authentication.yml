@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/api3-signed-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Bearer token configured in the Signed API's allowedAirnodes or endpoint authTokens
+    list. Required on endpoints or Airnode addresses configured with non-null authTokens.
+  sources:
+  - openapi/api3-signed-api-openapi.yml
