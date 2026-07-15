@@ -134,6 +134,8 @@ apis:
       - Third-party push relayers submitting signed data to chain
       - OEV searchers fetching price updates to submit winning auction bids
 common:
+  - type: AgenticAccess
+    url: agentic-access/api3-agentic-access.yml
   - type: DomainSecurity
     url: security/api3-domain-security.yml
   - type: Authentication
