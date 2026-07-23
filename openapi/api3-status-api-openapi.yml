@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: API3 Signed Airnodes Status API
+  description: The API3 Signed API is a self-hosted REST service that stores and serves cryptographically signed oracle data produced by Airnode feed nodes. Airnode operators push signed beacon data to a Signed API instance; dApp developers and OEV searchers then pull that data off-chain for verification or to construct on-chain transactions. Each deployment is scoped to one or more Airnode addresses and exposes configurable public or auth-token-protected endpoints.
+  version: 2.0.0
+  contact:
+    name: API3 DAO
+    url: https://api3.org/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://signed-api.api3.org
+  description: API3-hosted Signed API (example; operators self-host)
+tags:
+- name: Status
+  description: Health and deployment information
+paths:
+  /:
+    get:
+      operationId: getStatus
+      summary: Get deployment status
+      description: Returns the current health and configuration metadata for this Signed API deployment, including stage name, software version, deployment timestamp, config hash, and the list of certified Airnode addresses.
+      tags:
+      - Status
+      security:
+      - {}
+      responses:
+        '200':
+          description: Deployment status information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+              example:
+                stage: production
+                version: 2.0.0
+                currentTimestamp: '1718227200'
+                deploymentTimestamp: '1718100000'
+                configHash: 0xabc123def456...
+                certifiedAirnodes:
+                - '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+components:
+  schemas:
+    StatusResponse:
+      type: object
+      required:
+      - stage
+      - version
+      - currentTimestamp
+      - deploymentTimestamp
+      - configHash
+      - certifiedAirnodes
+      properties:
+        stage:
+          type: string
+          description: Deployment stage name (e.g. production, staging)
+          example: production
+        version:
+          type: string
+          description: Signed API software version
+          example: 2.0.0
+        currentTimestamp:
+          type: string
+          description: Current server Unix timestamp (seconds)
+          example: '1718227200'
+        deploymentTimestamp:
+          type: string
+          description: Unix timestamp when this instance was deployed
+          example: '1718100000'
+        configHash:
+          type: string
+          description: Hash of the active configuration (for change detection)
+          example: '0xabc123def456'
+        certifiedAirnodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvmAddress'
+          description: Airnode addresses that have been designated as certified/trusted by this deployment
+    EvmAddress:
+      type: string
+      pattern: ^0x[0-9a-fA-F]{40}$
+      description: EVM checksummed address (42 hex characters with 0x prefix)
+      example: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token configured in the Signed API's allowedAirnodes or endpoint authTokens list. Required on endpoints or Airnode addresses configured with non-null authTokens.
+externalDocs:
+  description: API3 Documentation
+  url: https://docs.api3.org/
