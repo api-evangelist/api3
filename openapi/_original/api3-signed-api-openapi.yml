@@ -1,0 +1,355 @@
+openapi: 3.0.3
+info:
+  title: API3 Signed API
+  description: >-
+    The API3 Signed API is a self-hosted REST service that stores and serves
+    cryptographically signed oracle data produced by Airnode feed nodes.
+    Airnode operators push signed beacon data to a Signed API instance; dApp
+    developers and OEV searchers then pull that data off-chain for verification
+    or to construct on-chain transactions. Each deployment is scoped to one or
+    more Airnode addresses and exposes configurable public or auth-token-protected
+    endpoints.
+  version: 2.0.0
+  contact:
+    name: API3 DAO
+    url: https://api3.org/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+externalDocs:
+  description: API3 Documentation
+  url: https://docs.api3.org/
+servers:
+  - url: https://signed-api.api3.org
+    description: API3-hosted Signed API (example; operators self-host)
+tags:
+  - name: Status
+    description: Health and deployment information
+  - name: Airnodes
+    description: Airnode address discovery
+  - name: Signed Data
+    description: Reading and writing cryptographically signed oracle data
+paths:
+  /:
+    get:
+      operationId: getStatus
+      summary: Get deployment status
+      description: >-
+        Returns the current health and configuration metadata for this Signed API
+        deployment, including stage name, software version, deployment timestamp,
+        config hash, and the list of certified Airnode addresses.
+      tags:
+        - Status
+      security:
+        - {}
+      responses:
+        '200':
+          description: Deployment status information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+              example:
+                stage: production
+                version: 2.0.0
+                currentTimestamp: '1718227200'
+                deploymentTimestamp: '1718100000'
+                configHash: '0xabc123def456...'
+                certifiedAirnodes:
+                  - '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+  /airnodes:
+    get:
+      operationId: listAirnodeAddresses
+      summary: List Airnode addresses
+      description: >-
+        Returns all Airnode addresses whose signed data is stored in this
+        Signed API instance.
+      tags:
+        - Airnodes
+      security:
+        - {}
+      responses:
+        '200':
+          description: List of Airnode EVM addresses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AirnodeListResponse'
+              example:
+                count: 2
+                data:
+                  - '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+                  - '0xC04575A2773Da9Cd23853A69694e02111b2c4182'
+  /{airnodeAddress}:
+    get:
+      operationId: getSignedData
+      summary: Get signed data for an Airnode
+      description: >-
+        Returns the latest signed beacon data for each templateId served by the
+        given Airnode address. The response map is keyed by beaconId (the keccak256
+        hash of airnodeAddress and templateId). Callers may optionally provide an
+        Authorization Bearer token if the endpoint requires it. Responses can omit
+        signatures when the endpoint is configured with hideSignatures=true, and can
+        include OEV-restricted data when isOev=true.
+      tags:
+        - Signed Data
+      security:
+        - bearerAuth: []
+        - {}
+      parameters:
+        - $ref: '#/components/parameters/AirnodeAddress'
+      responses:
+        '200':
+          description: Signed beacon data keyed by beaconId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignedDataResponse'
+              example:
+                count: 3
+                data:
+                  '0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc':
+                    airnode: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+                    templateId: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+                    beaconId: '0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc'
+                    timestamp: '1718227200'
+                    encodedValue: '0x000000000000000000000000000000000000000000000004563918244f40000'
+                    signature: '0xabcdef1234...'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: batchInsertSignedData
+      summary: Batch insert signed data for an Airnode
+      description: >-
+        Allows an Airnode feed node to push a batch of freshly signed beacon data
+        to this Signed API instance. Requires a valid Bearer token if the Airnode
+        is access-controlled. The API accepts v1 and v2 signed-data payloads.
+        Entries older than existing cached entries are silently skipped.
+      tags:
+        - Signed Data
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/AirnodeAddress'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchInsertRequest'
+            example:
+              - airnode: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+                templateId: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+                beaconId: '0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc'
+                timestamp: '1718227200'
+                encodedValue: '0x000000000000000000000000000000000000000000000004563918244f40000'
+                signature: '0xabcdef1234...'
+      responses:
+        '201':
+          description: Signed data accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchInsertResponse'
+              example:
+                count: 3
+                skipped: 0
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer token configured in the Signed API's allowedAirnodes or endpoint
+        authTokens list. Required on endpoints or Airnode addresses configured
+        with non-null authTokens.
+  parameters:
+    AirnodeAddress:
+      name: airnodeAddress
+      in: path
+      required: true
+      description: >-
+        EVM-checksummed address of the Airnode whose data is being requested or
+        pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace.
+      schema:
+        type: string
+        pattern: '^0x[0-9a-fA-F]{40}$'
+        example: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+  schemas:
+    EvmAddress:
+      type: string
+      pattern: '^0x[0-9a-fA-F]{40}$'
+      description: EVM checksummed address (42 hex characters with 0x prefix)
+      example: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+    EvmId:
+      type: string
+      pattern: '^0x[0-9a-fA-F]{64}$'
+      description: EVM 32-byte identifier as 66-char hex string (0x + 64 hex chars)
+      example: '0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc'
+    SignedDataEntry:
+      type: object
+      required:
+        - airnode
+        - templateId
+        - beaconId
+        - timestamp
+        - encodedValue
+        - signature
+      properties:
+        airnode:
+          $ref: '#/components/schemas/EvmAddress'
+          description: EVM address of the Airnode that produced and signed this data
+        templateId:
+          $ref: '#/components/schemas/EvmId'
+          description: Identifier of the Airnode template (endpoint + parameters hash)
+        beaconId:
+          $ref: '#/components/schemas/EvmId'
+          description: keccak256(airnodeAddress, templateId) — the on-chain beacon identifier
+        timestamp:
+          type: string
+          description: Unix timestamp (seconds) when the value was signed
+          example: '1718227200'
+        encodedValue:
+          type: string
+          description: ABI-encoded int224 oracle value
+          example: '0x000000000000000000000000000000000000000000000004563918244f40000'
+        signature:
+          type: string
+          description: >-
+            ECDSA signature by the Airnode private key over
+            keccak256(templateId, timestamp, encodedValue). May be omitted
+            when the endpoint is configured with hideSignatures=true.
+          example: '0xabcdef1234567890...'
+    BatchInsertRequest:
+      type: array
+      items:
+        $ref: '#/components/schemas/SignedDataEntry'
+      description: Array of signed data entries to insert (max 10 MB body)
+    BatchInsertResponse:
+      type: object
+      required:
+        - count
+        - skipped
+      properties:
+        count:
+          type: integer
+          description: Number of entries accepted and stored
+          example: 3
+        skipped:
+          type: integer
+          description: >-
+            Number of entries skipped because an equal or newer entry already
+            exists in the cache for that beaconId
+          example: 0
+    SignedDataMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/SignedDataEntry'
+      description: Map of beaconId to the latest SignedDataEntry for that beacon
+    SignedDataResponse:
+      type: object
+      required:
+        - count
+        - data
+      properties:
+        count:
+          type: integer
+          description: Number of beacons returned
+          example: 3
+        data:
+          $ref: '#/components/schemas/SignedDataMap'
+    AirnodeListResponse:
+      type: object
+      required:
+        - count
+        - data
+      properties:
+        count:
+          type: integer
+          description: Number of Airnode addresses in this deployment
+          example: 2
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvmAddress'
+          description: List of Airnode EVM addresses
+    StatusResponse:
+      type: object
+      required:
+        - stage
+        - version
+        - currentTimestamp
+        - deploymentTimestamp
+        - configHash
+        - certifiedAirnodes
+      properties:
+        stage:
+          type: string
+          description: Deployment stage name (e.g. production, staging)
+          example: production
+        version:
+          type: string
+          description: Signed API software version
+          example: 2.0.0
+        currentTimestamp:
+          type: string
+          description: Current server Unix timestamp (seconds)
+          example: '1718227200'
+        deploymentTimestamp:
+          type: string
+          description: Unix timestamp when this instance was deployed
+          example: '1718100000'
+        configHash:
+          type: string
+          description: Hash of the active configuration (for change detection)
+          example: '0xabc123def456'
+        certifiedAirnodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvmAddress'
+          description: >-
+            Airnode addresses that have been designated as certified/trusted
+            by this deployment
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
+          example: Unauthorized
+  responses:
+    BadRequest:
+      description: Invalid request body or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing or invalid Bearer token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: >-
+        Caller's Airnode address or token is not in the allowedAirnodes list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Airnode address not found in this deployment
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

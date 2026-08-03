@@ -1,0 +1,18 @@
+{
+  "provider": "api3",
+  "sources": [
+    "api3-airnodes-api-openapi.yml",
+    "api3-signed-data-api-openapi.yml",
+    "api3-status-api-openapi.yml"
+  ],
+  "outputs": [
+    "api3-airnodes-api-openapi.yml",
+    "api3-signed-data-api-openapi.yml",
+    "api3-status-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
