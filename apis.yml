@@ -202,7 +202,7 @@ common:
   - type: Market
     url: https://market.api3.org/
   - type: OpenAPI
-    url: openapi/api3-signed-api-openapi.yml
+    url: openapi/_original/api3-signed-api-openapi.yml
   - type: JSONLD
     url: json-ld/api3-context.jsonld
   - type: Plans
