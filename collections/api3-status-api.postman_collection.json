@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "33d88c4f-edb5-42b1-bde9-caf48f527750",
+      "name": "Status",
+      "description": {
+        "content": "Health and deployment information",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bbf7c869-e6cf-43c5-a944-bfd0a7369bcb",
+          "name": "Get deployment status",
+          "request": {
+            "name": "Get deployment status",
+            "description": {
+              "content": "Returns the current health and configuration metadata for this Signed API deployment, including stage name, software version, deployment timestamp, config hash, and the list of certified Airnode addresses.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "b229fdbf-6b34-4e0f-bbd4-dc13a5eb22d7",
+              "name": "Deployment status information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"stage\": \"production\",\n  \"version\": \"2.0.0\",\n  \"currentTimestamp\": \"1718227200\",\n  \"deploymentTimestamp\": \"1718100000\",\n  \"configHash\": \"0xabc123def456...\",\n  \"certifiedAirnodes\": [\n    \"0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://signed-api.api3.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8c686700-8ca9-4afd-ab1d-01d7afc34b60",
+    "name": "API3 Signed Airnodes Status API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API3 Signed API is a self-hosted REST service that stores and serves cryptographically signed oracle data produced by Airnode feed nodes. Airnode operators push signed beacon data to a Signed API instance; dApp developers and OEV searchers then pull that data off-chain for verification or to construct on-chain transactions. Each deployment is scoped to one or more Airnode addresses and exposes configurable public or auth-token-protected endpoints.\n\nContact Support:\n Name: API3 DAO",
+      "type": "text/plain"
+    }
+  }
+}

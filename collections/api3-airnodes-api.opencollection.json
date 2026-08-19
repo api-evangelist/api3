@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API3 Signed Airnodes API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Airnodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Airnode addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://signed-api.api3.org/airnodes"
+          },
+          "docs": "Returns all Airnode addresses whose signed data is stored in this Signed API instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

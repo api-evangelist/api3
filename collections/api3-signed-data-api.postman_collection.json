@@ -1,0 +1,587 @@
+{
+  "item": [
+    {
+      "id": "3e005fe6-80ad-4c95-90be-d3d1b4974c6b",
+      "name": "Signed Data",
+      "description": {
+        "content": "Reading and writing cryptographically signed oracle data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c2bd920b-476b-4263-957b-7e2ab6dbfba2",
+          "name": "Get signed data for an Airnode",
+          "request": {
+            "name": "Get signed data for an Airnode",
+            "description": {
+              "content": "Returns the latest signed beacon data for each templateId served by the given Airnode address. The response map is keyed by beaconId (the keccak256 hash of airnodeAddress and templateId). Callers may optionally provide an Authorization Bearer token if the endpoint requires it. Responses can omit signatures when the endpoint is configured with hideSignatures=true, and can include OEV-restricted data when isOev=true.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ":airnodeAddress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "airnodeAddress",
+                  "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a4337e94-e942-4b73-a885-cb3987dc4492",
+              "name": "Signed beacon data keyed by beaconId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":airnodeAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "airnodeAddress",
+                      "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 3,\n  \"data\": {\n    \"0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc\": {\n      \"airnode\": \"0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace\",\n      \"templateId\": \"0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef\",\n      \"beaconId\": \"0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc\",\n      \"timestamp\": \"1718227200\",\n      \"encodedValue\": \"0x000000000000000000000000000000000000000000000004563918244f40000\",\n      \"signature\": \"0xabcdef1234...\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa5ef9f7-edf1-4b7c-8b68-41b20986b694",
+              "name": "Missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":airnodeAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "airnodeAddress",
+                      "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c370059-5604-49d6-b4b6-1d49834f4107",
+              "name": "Caller's Airnode address or token is not in the allowedAirnodes list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":airnodeAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "airnodeAddress",
+                      "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfad6312-301a-467a-a192-4bac003d85fa",
+              "name": "Airnode address not found in this deployment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":airnodeAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "airnodeAddress",
+                      "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dbca1478-400c-497c-b7d3-3bddb208c2ae",
+          "name": "Batch insert signed data for an Airnode",
+          "request": {
+            "name": "Batch insert signed data for an Airnode",
+            "description": {
+              "content": "Allows an Airnode feed node to push a batch of freshly signed beacon data to this Signed API instance. Requires a valid Bearer token if the Airnode is access-controlled. The API accepts v1 and v2 signed-data payloads. Entries older than existing cached entries are silently skipped.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ":airnodeAddress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "airnodeAddress",
+                  "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"airnode\": \"<string>\",\n    \"templateId\": \"<string>\",\n    \"beaconId\": \"<string>\",\n    \"timestamp\": \"<string>\",\n    \"encodedValue\": \"<string>\",\n    \"signature\": \"<string>\"\n  },\n  {\n    \"airnode\": \"<string>\",\n    \"templateId\": \"<string>\",\n    \"beaconId\": \"<string>\",\n    \"timestamp\": \"<string>\",\n    \"encodedValue\": \"<string>\",\n    \"signature\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9e525078-d8c2-44a3-9920-15bd361f231c",
+              "name": "Signed data accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":airnodeAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "airnodeAddress",
+                      "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"airnode\": \"0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace\",\n    \"templateId\": \"0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef\",\n    \"beaconId\": \"0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc\",\n    \"timestamp\": \"1718227200\",\n    \"encodedValue\": \"0x000000000000000000000000000000000000000000000004563918244f40000\",\n    \"signature\": \"0xabcdef1234...\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 3,\n  \"skipped\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90b846b2-404f-4603-8261-d3e888277540",
+              "name": "Invalid request body or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":airnodeAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "airnodeAddress",
+                      "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"airnode\": \"0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace\",\n    \"templateId\": \"0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef\",\n    \"beaconId\": \"0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc\",\n    \"timestamp\": \"1718227200\",\n    \"encodedValue\": \"0x000000000000000000000000000000000000000000000004563918244f40000\",\n    \"signature\": \"0xabcdef1234...\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4ded26c-7e98-4c2e-b4b9-7ae4621291b4",
+              "name": "Missing or invalid Bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":airnodeAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "airnodeAddress",
+                      "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"airnode\": \"0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace\",\n    \"templateId\": \"0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef\",\n    \"beaconId\": \"0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc\",\n    \"timestamp\": \"1718227200\",\n    \"encodedValue\": \"0x000000000000000000000000000000000000000000000004563918244f40000\",\n    \"signature\": \"0xabcdef1234...\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5689303f-f201-4af1-9420-6b7baea760f6",
+              "name": "Caller's Airnode address or token is not in the allowedAirnodes list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ":airnodeAddress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "airnodeAddress",
+                      "description": "(Required) EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"airnode\": \"0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace\",\n    \"templateId\": \"0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef\",\n    \"beaconId\": \"0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc\",\n    \"timestamp\": \"1718227200\",\n    \"encodedValue\": \"0x000000000000000000000000000000000000000000000004563918244f40000\",\n    \"signature\": \"0xabcdef1234...\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://signed-api.api3.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1ef0bc23-143f-4584-ad68-2c283244d5a7",
+    "name": "API3 Signed Airnodes Signed Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API3 Signed API is a self-hosted REST service that stores and serves cryptographically signed oracle data produced by Airnode feed nodes. Airnode operators push signed beacon data to a Signed API instance; dApp developers and OEV searchers then pull that data off-chain for verification or to construct on-chain transactions. Each deployment is scoped to one or more Airnode addresses and exposes configurable public or auth-token-protected endpoints.\n\nContact Support:\n Name: API3 DAO",
+      "type": "text/plain"
+    }
+  }
+}

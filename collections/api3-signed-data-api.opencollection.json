@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API3 Signed Airnodes Signed Data API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Signed Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get signed data for an Airnode",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://signed-api.api3.org/:airnodeAddress",
+            "params": [
+              {
+                "name": "airnodeAddress",
+                "value": "",
+                "type": "path",
+                "description": "EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the latest signed beacon data for each templateId served by the given Airnode address. The response map is keyed by beaconId (the keccak256 hash of airnodeAddress and templateId). Callers may optionally provide an Authorization Bearer token if the endpoint requires it. Responses can omit signatures when the endpoint is configured with hideSignatures=true, and can include OEV-restricted data when isOev=true."
+        },
+        {
+          "info": {
+            "name": "Batch insert signed data for an Airnode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://signed-api.api3.org/:airnodeAddress",
+            "params": [
+              {
+                "name": "airnodeAddress",
+                "value": "",
+                "type": "path",
+                "description": "EVM-checksummed address of the Airnode whose data is being requested or pushed. Example: 0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Allows an Airnode feed node to push a batch of freshly signed beacon data to this Signed API instance. Requires a valid Bearer token if the Airnode is access-controlled. The API accepts v1 and v2 signed-data payloads. Entries older than existing cached entries are silently skipped."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

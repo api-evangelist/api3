@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "d7d89488-3e5d-4dc9-bd96-b6e106c60f37",
+      "name": "Airnodes",
+      "description": {
+        "content": "Airnode address discovery",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ccb71420-e779-4cf5-84af-ea026bbe7577",
+          "name": "List Airnode addresses",
+          "request": {
+            "name": "List Airnode addresses",
+            "description": {
+              "content": "Returns all Airnode addresses whose signed data is stored in this Signed API instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "airnodes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "396ec249-0791-479b-810b-74b1989ed731",
+              "name": "List of Airnode EVM addresses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "airnodes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2,\n  \"data\": [\n    \"0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace\",\n    \"0xC04575A2773Da9Cd23853A69694e02111b2c4182\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://signed-api.api3.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a91f9aff-e671-41f4-a35b-d8aa4dd67e0b",
+    "name": "API3 Signed Airnodes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The API3 Signed API is a self-hosted REST service that stores and serves cryptographically signed oracle data produced by Airnode feed nodes. Airnode operators push signed beacon data to a Signed API instance; dApp developers and OEV searchers then pull that data off-chain for verification or to construct on-chain transactions. Each deployment is scoped to one or more Airnode addresses and exposes configurable public or auth-token-protected endpoints.\n\nContact Support:\n Name: API3 DAO",
+      "type": "text/plain"
+    }
+  }
+}
