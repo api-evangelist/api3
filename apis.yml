@@ -42,7 +42,7 @@ access: 3rd-Party
 position: Consumer
 created: '2026-06-13'
 modified: '2026-06-13'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: api3:dapi-data-feeds
   name: API3 dAPI Data Feeds
