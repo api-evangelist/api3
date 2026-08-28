@@ -12,6 +12,18 @@ description: >-
   captures MEV that traditionally leaks to bots around oracle updates and redistributes 80% of that
   revenue to the dApps reading the feeds, creating a net-positive oracle revenue model. The DAO
   governs the network via staked API3 tokens.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
