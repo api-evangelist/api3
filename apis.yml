@@ -39,6 +39,10 @@ accessModel:
   generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/api3.png
+x-docs-platform: vitepress
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-19
+x-docs-hosting: firebase
 tags:
   - Blockchain
   - Oracle
