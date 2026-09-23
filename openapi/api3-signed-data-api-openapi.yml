@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: API3 Signed Airnodes Signed Data API
+  title: API3 Signed Signed Data API
   description: The API3 Signed API is a self-hosted REST service that stores and serves cryptographically signed oracle data produced by Airnode feed nodes. Airnode operators push signed beacon data to a Signed API instance; dApp developers and OEV searchers then pull that data off-chain for verification or to construct on-chain transactions. Each deployment is scoped to one or more Airnode addresses and exposes configurable public or auth-token-protected endpoints.
   version: 2.0.0
   contact:
@@ -92,23 +92,18 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
+          example: Unauthorized
     BatchInsertRequest:
       type: array
       items:
         $ref: '#/components/schemas/SignedDataEntry'
       description: Array of signed data entries to insert (max 10 MB body)
-    SignedDataResponse:
-      type: object
-      required:
-      - count
-      - data
-      properties:
-        count:
-          type: integer
-          description: Number of beacons returned
-          example: 3
-        data:
-          $ref: '#/components/schemas/SignedDataMap'
     SignedDataEntry:
       type: object
       required:
@@ -140,23 +135,16 @@ components:
           type: string
           description: ECDSA signature by the Airnode private key over keccak256(templateId, timestamp, encodedValue). May be omitted when the endpoint is configured with hideSignatures=true.
           example: 0xabcdef1234567890...
+    EvmAddress:
+      type: string
+      pattern: ^0x[0-9a-fA-F]{40}$
+      description: EVM checksummed address (42 hex characters with 0x prefix)
+      example: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
     SignedDataMap:
       type: object
       additionalProperties:
         $ref: '#/components/schemas/SignedDataEntry'
       description: Map of beaconId to the latest SignedDataEntry for that beacon
-    EvmId:
-      type: string
-      pattern: ^0x[0-9a-fA-F]{64}$
-      description: EVM 32-byte identifier as 66-char hex string (0x + 64 hex chars)
-      example: '0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Human-readable error message
-          example: Unauthorized
     BatchInsertResponse:
       type: object
       required:
@@ -171,20 +159,32 @@ components:
           type: integer
           description: Number of entries skipped because an equal or newer entry already exists in the cache for that beaconId
           example: 0
-    EvmAddress:
+    EvmId:
       type: string
-      pattern: ^0x[0-9a-fA-F]{40}$
-      description: EVM checksummed address (42 hex characters with 0x prefix)
-      example: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
+      pattern: ^0x[0-9a-fA-F]{64}$
+      description: EVM 32-byte identifier as 66-char hex string (0x + 64 hex chars)
+      example: '0xd6d5134a2b14b893c24ce4ef8f2b7543f02e59e5b2b8e9f3b1c0a4d5e6f7a8bc'
+    SignedDataResponse:
+      type: object
+      required:
+      - count
+      - data
+      properties:
+        count:
+          type: integer
+          description: Number of beacons returned
+          example: 3
+        data:
+          $ref: '#/components/schemas/SignedDataMap'
   responses:
-    NotFound:
-      description: Airnode address not found in this deployment
+    Forbidden:
+      description: Caller's Airnode address or token is not in the allowedAirnodes list
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Caller's Airnode address or token is not in the allowedAirnodes list
+    NotFound:
+      description: Airnode address not found in this deployment
       content:
         application/json:
           schema:

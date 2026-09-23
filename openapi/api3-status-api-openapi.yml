@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: API3 Signed Airnodes Status API
+  title: API3 Signed Status API
   description: The API3 Signed API is a self-hosted REST service that stores and serves cryptographically signed oracle data produced by Airnode feed nodes. Airnode operators push signed beacon data to a Signed API instance; dApp developers and OEV searchers then pull that data off-chain for verification or to construct on-chain transactions. Each deployment is scoped to one or more Airnode addresses and exposes configurable public or auth-token-protected endpoints.
   version: 2.0.0
   contact:
