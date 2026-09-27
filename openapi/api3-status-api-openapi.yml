@@ -42,6 +42,11 @@ paths:
                 - '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
 components:
   schemas:
+    EvmAddress:
+      type: string
+      pattern: ^0x[0-9a-fA-F]{40}$
+      description: EVM checksummed address (42 hex characters with 0x prefix)
+      example: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
     StatusResponse:
       type: object
       required:
@@ -77,11 +82,6 @@ components:
           items:
             $ref: '#/components/schemas/EvmAddress'
           description: Airnode addresses that have been designated as certified/trusted by this deployment
-    EvmAddress:
-      type: string
-      pattern: ^0x[0-9a-fA-F]{40}$
-      description: EVM checksummed address (42 hex characters with 0x prefix)
-      example: '0xA30CA71Ba54E83127214D3271aEA8F5D6bD4Dace'
   securitySchemes:
     bearerAuth:
       type: http
