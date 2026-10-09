@@ -1,3 +1,8 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (dated 2026-06-13 by the file itself), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
+generated: '2026-06-13'
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
@@ -100,3 +105,37 @@ plans:
       - name: Monthly payout in native chain gas token
       - name: No smart contract code changes required
       - name: Supported on all 40+ API3 chain deployments
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - revenue-share
+  - subscription
+  units:
+  - period
+  plans:
+  - name: Testnet Trial Plan
+    access: trial
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - other
+  - name: Mainnet Standard Plan
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - other
+    periods:
+    - day
+  - name: OEV Rewards (Revenue Share)
+    access: partner
+    model: revenue-share
+    model_how: stated
+    units:
+    - other
+    periods:
+    - month
