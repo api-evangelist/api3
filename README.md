@@ -64,28 +64,130 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-API3 is a first-party blockchain oracle network that connects real-world APIs directly to smart contracts without intermediary nodes. Its core technology is Airnode, a serverless oracle node that API providers operate themselves, cryptographically signing data before serving it on-chain.
+API3 is a first-party blockchain oracle network that connects real-world APIs directly to smart contracts without intermediary nodes. Its core technology is Airnode, a serverless oracle node that API providers operate themselves, cryptographically signing data before serving it on-chain. The API3 Market enables dApp developers to subscribe to managed decentralized APIs (dAPIs) — aggregated, multi-source data feeds covering 150+ price pairs across 40+ EVM chains — without speaking to a sales rep or signing a contract. API3's OEV (Oracle Extractable Value) mechanism captures MEV that traditionally leaks to bots around oracle updates and redistributes 80% of that revenue to the dApps reading the feeds, creating a net-positive oracle revenue model. The DAO governs the network via staked API3 tokens.
 
-The API3 Market enables dApp developers to subscribe to managed decentralized APIs (dAPIs) — aggregated, multi-source data feeds covering 150+ price pairs across 40+ EVM chains. API3's OEV (Oracle Extractable Value) mechanism captures MEV that traditionally leaks to bots around oracle updates and redistributes 80% of that revenue to the dApps reading the feeds.
+**Areas:** Blockchain · Oracle · Decentralized · Data Feed · Price Feeds · Web3 · DeFi · Smart Contracts · OEV · dAPI
 
-## APIs
+## API3 on APIs.io
 
-- **dAPI Data Feeds** — Managed on-chain price and data feeds for 150+ asset pairs across 40+ EVM networks, readable via AggregatorV2V3Interface-compatible proxy contracts.
-- **OEV Rewards** — Revenue-sharing mechanism returning 80% of oracle MEV auction proceeds to participating dApps monthly in native gas token.
-- **Airnode HTTP Gateway** — REST endpoint exposed by individual Airnode operators for off-chain signed-data access, testing, and OEV auction fulfillment.
+Everything profiled for API3 is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/api3/](https://apis.io/providers/api3/)** — or go straight to one of the APIs or properties below.
 
-## Links
+### APIs (6)
 
-- Website: https://api3.org/
-- Documentation: https://docs.api3.org/
-- Market: https://market.api3.org/
-- Blog: https://blog.api3.org/
-- GitHub: https://github.com/api3dao
-- Discord: https://discord.gg/qnRrcfnm5W
+- [API3 dAPI Data Feeds](https://apis.io/apis/api3/dapi-data-feeds/) — Managed decentralized API (dAPI) data feeds sourced directly from first-party oracle nodes operated by the data providers themselves. Each feed aggregates…
+- [API3 OEV Rewards](https://apis.io/apis/api3/oev-rewards/) — Oracle Extractable Value (OEV) Rewards is API3's revenue-sharing mechanism for dApps that integrate OEV-enabled Api3ReaderProxyV1 proxy contracts. When…
+- [API3 Airnode HTTP Gateway](https://apis.io/apis/api3/airnode-http-gateway/) — The Airnode HTTP gateway exposes a REST endpoint that allows authorized callers to query an Airnode operator's API data off-chain without sending a…
+- [API3 Airnodes API](https://apis.io/apis/api3/api3-airnodes-api/) — Airnode address discovery
+- [API3 Signed Data API](https://apis.io/apis/api3/api3-signed-data-api/) — Reading and writing cryptographically signed oracle data
+- [API3 Status API](https://apis.io/apis/api3/api3-status-api/) — Health and deployment information
 
-## Profile
+### Published properties
 
-- `apis.yml` — APIs.json 0.19 provider profile
-- `plans/api3-plans.yml` — Subscription plan details
-- `rate-limits/api3-rate-limits.yml` — Rate limit documentation
-- `finops/api3-finops.yml` — FinOps Framework cost model
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Api3 Agentic Access](https://apis.io/agentic-access/api3/api3-agentic-access/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Api3 Context](https://apis.io/jsonld/api3/api3-context/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [API3 Signed Airnodes API](https://apis.io/collections/api3/open-api3-airnodes-api/)
+- [API3 Signed Airnodes Signed Data API](https://apis.io/collections/api3/open-api3-signed-data-api/)
+- [API3 Signed Airnodes Status API](https://apis.io/collections/api3/open-api3-status-api/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Api3 Authentication](https://apis.io/security/api3/api3-authentication/)
+- [Api3 Domain Security](https://apis.io/security/api3/api3-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Api3 Plans](https://apis.io/plans/api3/api3-plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Api3 Rate Limits](https://apis.io/rate-limits/api3/api3-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Api3 Finops](https://apis.io/finops/api3/api3-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://api3.org/)
+- [Documentation](https://docs.api3.org/)
+- [Blog](https://blog.api3.org/)
+- [GitHub](https://github.com/api3dao)
+
+## API Evangelist rating
+
+**Kin Score 31.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 57.1 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 40.5 |
+| Access clarity | 7.9 |
+
+**Agent readiness 22.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/api3/](https://apis.io/providers/api3/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for API3: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/api3/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
